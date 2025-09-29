@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: app-support-server
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /support
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production

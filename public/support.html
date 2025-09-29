@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Support</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 1rem
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Support</h1>
+    <form id="supportForm">
+        <label>Name:<br/><input name="name" required></label><br/><br/>
+        <label>Email:<br/><input name="email" type="email" required></label><br/><br/>
+        <label>Message:<br/><textarea name="message" rows="6" required></textarea></label><br/><br/>
+        <button type="submit">Send</button>
+    </form>
+    <div id="status"></div>
+
+    <script>
+        document.getElementById('supportForm').addEventListener('submit', async(e) => {
+            e.preventDefault();
+            const fd = new FormData(e.target);
+            const body = {
+                name: fd.get('name'),
+                email: fd.get('email'),
+                message: fd.get('message')
+            };
+            const res = await fetch('/support-message', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+            const j = await res.json();
+            document.getElementById('status').textContent = j.success ? 'Message sent.' : ('Error: ' + (j.error || 'unknown'));
+            if (j.success) e.target.reset();
+        });
+    </script>
+</body>
+
+</html>
