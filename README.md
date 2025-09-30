@@ -39,3 +39,12 @@ Key Render settings:
 - Health check path: `/support`
 
 Important: `messages.json` is a local file store and is not durable on Render across deploys or multiple instances. Use a managed database or external storage for production.
+
+GitHub Pages
+------------
+The `public/` folder contains static pages suitable for GitHub Pages. A workflow is included to publish `public/` to the `gh-pages` branch on push to `main`.
+
+Notes about the static deployment:
+- The support form will attempt a same-origin POST to `/support-message` when available.
+- When the site is hosted statically (e.g., GitHub Pages), the form will fall back to a `mailto:` link unless you supply an API endpoint via the `?api=` query parameter (for example: `https://your-site.github.io/?api=https://your-server/support-message`).
+
