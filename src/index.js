@@ -22,6 +22,11 @@ app.get('/privacy', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'privacy.html'));
 });
 
+// Lightweight health endpoint for load balancers and platforms
+app.get('/health', (req, res) => {
+    res.json({ status: 'ok', uptime: process.uptime() });
+});
+
 app.post('/support-message', (req, res) => {
     const { name, email, message } = req.body || {};
     if (!name || !email || !message) {
