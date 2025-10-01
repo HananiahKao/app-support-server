@@ -102,9 +102,6 @@
             }
         });
     </script>
-    headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }); const j = await res.json(); document.getElementById('status').textContent = j.success ? 'Message sent.' : ('Error: ' + (j.error || 'unknown')); if (j.success) e.target.reset();
-    });
-    </script>
 </body>
 
 </html>
