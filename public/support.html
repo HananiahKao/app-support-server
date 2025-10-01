@@ -25,81 +25,22 @@
     <div id="status"></div>
 
     <script>
-        // Support form: when hosted on a server this posts to /support-message.
-        // When hosted as static site (GitHub Pages) provide a fallback:
-        // - If `?api=` query param is present, POST to that URL.
-        // - Otherwise, show a mailto fallback.
-
-        function getApiOverride() {
-            try {
-                const url = new URL(window.location.href);
-                return url.searchParams.get('api');
-            } catch (e) {
-                return null;
-            }
-        }
-
-        // Determine if we're served under the repo subpath (GitHub Pages):
-        // e.g. https://<user>.github.io/app-support-server/ -> basePath = '/app-support-server'
-        function repoBasePath() {
-            try {
-                const parts = window.location.pathname.split('/').filter(Boolean);
-                return parts[0] === 'app-support-server' ? '/app-support-server' : '';
-            } catch (e) {
-                return '';
-            }
-        }
-
-        async function postToApi(apiUrl, body) {
-            const res = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            });
-            return res.json();
-        }
-
-        document.getElementById('supportForm').addEventListener('submit', async(e) => {
+        // Static site behavior: open a mail client with prefilled message to the support email.
+        document.getElementById('supportForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const fd = new FormData(e.target);
-            const body = {
-                name: fd.get('name'),
-                email: fd.get('email'),
-                message: fd.get('message')
-            };
+            const name = fd.get('name') || '';
+            const email = fd.get('email') || '';
+            const message = fd.get('message') || '';
 
-            const apiOverride = getApiOverride();
-            try {
-                let j;
-                if (apiOverride) {
-                    j = await postToApi(apiOverride, body);
-                } else {
-                    // try same-origin POST to /support-message; will fail on static hosts
-                    try {
-                        const base = repoBasePath();
-                        const res = await fetch(base + '/support-message', {
-                            method: 'POST',
-                            headers: {
-                                'content-type': 'application/json'
-                            },
-                            body: JSON.stringify(body)
-                        });
-                        j = await res.json();
-                    } catch (err) {
-                        // fallback to mailto link
-                        const mailto = `mailto:support@example.com?subject=${encodeURIComponent('Support request from '+body.name)}&body=${encodeURIComponent(body.message+'\n\nContact: '+body.email)}`;
-                        document.getElementById('status').innerHTML = `This page is hosted statically; please <a href="${mailto}">send an email to support</a> or deploy the server and pass ?api=https://your-server${repoBasePath()}/support-message`;
-                        return;
-                    }
-                }
+            const supportEmail = 'viols-astral.0n@icloud.com';
+            const subject = encodeURIComponent(`Support request from ${name}`);
+            const body = encodeURIComponent(`${message}\n\nContact: ${email}`);
+            const mailto = `mailto:${supportEmail}?subject=${subject}&body=${body}`;
 
-                document.getElementById('status').textContent = j && j.success ? 'Message sent.' : ('Error: ' + (j && j.error || 'unknown'));
-                if (j && j.success) e.target.reset();
-            } catch (e) {
-                document.getElementById('status').textContent = 'Error sending message: ' + (e && e.message || e);
-            }
+            // Update status and open the mail client.
+            document.getElementById('status').innerHTML = `This page uses email for support. Opening your mail client...`;
+            window.location.href = mailto;
         });
     </script>
 </body>

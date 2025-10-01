@@ -45,6 +45,6 @@ GitHub Pages
 The `public/` folder contains static pages suitable for GitHub Pages. A workflow is included to publish `public/` to the `gh-pages` branch on push to `main`.
 
 Notes about the static deployment:
-- The support form will attempt a same-origin POST to `/support-message` when available.
-- When the site is hosted statically (e.g., GitHub Pages), the form will fall back to a `mailto:` link unless you supply an API endpoint via the `?api=` query parameter (for example: `https://your-site.github.io/?api=https://your-server/support-message`).
+- The support form is static on GitHub Pages and sends via email to `viols-astral.0n@icloud.com`.
+- If you later host the API, you can replace the form with a direct POST to your server's `/support-message` endpoint.
 
