@@ -1,7 +1,7 @@
 {
     "name": "app-support-server",
     "version": "0.1.0",
-    "description": "Simple support server serving a support page, privacy policy, and a support-message endpoint.",
+    "description": "Static GitHub Pages site: support and privacy pages (support via mailto).",
     "main": "public/index.html",
     "scripts": {
         "start": "echo \"This project is a static GitHub Pages site. Use the Actions workflow to deploy.\"",
