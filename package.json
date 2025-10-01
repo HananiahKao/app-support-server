@@ -2,23 +2,14 @@
     "name": "app-support-server",
     "version": "0.1.0",
     "description": "Simple support server serving a support page, privacy policy, and a support-message endpoint.",
-    "main": "src/index.js",
+    "main": "public/index.html",
     "scripts": {
-        "start": "node src/index.js",
-        "dev": "nodemon --watch src -e js --exec node src/index.js",
-        "test": "jest --runInBand"
+        "start": "echo \"This project is a static GitHub Pages site. Use the Actions workflow to deploy.\"",
+        "test": "echo \"No tests configured for static site.\""
     },
-    "keywords": ["support", "privacy", "express"],
+    "keywords": ["support", "privacy", "static"],
     "author": "",
     "license": "MIT",
-    "dependencies": {
-        "cors": "^2.8.5",
-        "express": "^4.18.2",
-        "morgan": "^1.10.0"
-    },
-    "devDependencies": {
-        "jest": "^29.6.2",
-        "nodemon": "^2.0.22",
-        "supertest": "^6.3.3"
-    }
+    "dependencies": {},
+    "devDependencies": {}
 }
